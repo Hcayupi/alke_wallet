@@ -1,0 +1,68 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'global/css/global.css' %}">
+    <link rel="stylesheet" href="{%static 'login/css/style.css'%}">
+
+</head>
+
+<body>
+    <div class="container min-vh-100 d-flex justify-content-center align-items-center">
+        <div class="col-11 col-sm-8 col-md-5 col-lg-4">
+            <div class="card shadow cardStyle">
+                <div id="inicio" class="card-header text-center formTitle">
+                    <h3 class="mb-0 fw-bold ">Iniciar sesión</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label class="form-label">Usuario</label>
+                            {{form.username}}
+                        </div>
+                        <div class="mb-5">
+                            <label class="form-label">Contraseña</label>
+                            <div class="input-group w-100">
+                                {{form.password}}
+                                <button type="button" class="btn btn-outline-secondary" onclick="togglePassword(this)">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+                            {% if messages%}
+                            <div class="invalid-feedback d-block">
+                                {% for message in messages %}
+                                    {{message}}
+                                {% endfor%}
+                            </div>
+                            {% endif%}
+                        </div>
+                        <button id="idLogin" type="submit" class="btn buttonBlue w-100 ">
+                            Login
+                        </button>
+                    </form>
+                    <div>
+                        <a href="register.html" class="d-block text-center mt-3 small">
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+                    <div class="separatorLine"></div>
+                    <a id="idCrear" href="{% url 'signup'%}" class="btn buttonGreen w-100 ">
+                        Crear cuenta
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{%static 'login/js/login.js' %}"></script>
+</body>
+
+</html>

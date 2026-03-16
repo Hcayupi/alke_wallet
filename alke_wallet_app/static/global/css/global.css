@@ -1,0 +1,67 @@
+/*CAPA 1*/
+body {
+    background-color: RGBA(var(--bs-dark-rgb), var(--bs-bg-opacity, 1)) !important;
+    margin: 0;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/*CAPA 2*/
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url("../img/dollar.png");
+    background-repeat: round;
+    background-size: 45%;
+    transform-origin: center;
+    z-index: -2;
+}
+
+/*CAPA 3*/
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(1, 36, 25, 0.9);
+    z-index: -1;
+}
+
+
+
+.formTitle {
+    background-color: #07533ce6;
+    color: #FFFFFF;
+}
+
+.buttonGreen {
+
+    /* estado normal */
+    --bs-btn-bg: #095a42e6;
+    --bs-btn-border-color: #095a42e6;
+    --bs-btn-color: #ffffff;
+
+    /* hover */
+    --bs-btn-hover-bg: #0e7455e6;
+    --bs-btn-hover-border-color: #0e7455e6;
+    --bs-btn-hover-color: #e3f7e9;
+
+    /* active - focus */
+    --bs-btn-active-bg: #094b37e6;
+    --bs-btn-active-border-color: #e4e9f3;
+    --bs-btn-active-color: #54ac91e6;
+
+
+    font-weight: bold;
+    border-radius: 6px;
+    border-color: #36a420;
+    font-size: 17px;
+    line-height: 48px;
+    padding: 0 16px;
+
+
+}
+.chart-container {
+    position: relative;
+    height: 350px;
+}

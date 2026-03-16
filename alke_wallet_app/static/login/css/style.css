@@ -1,0 +1,38 @@
+
+
+.separatorLine {
+    align-items: center;
+    border-bottom: 1px solid #DADDE1;
+    display: flex;
+    margin: 20px 16px;
+    text-align: center;
+}
+
+.cardStyle {
+    border: #2a2f33;
+}
+
+.buttonBlue {
+    /* estado normal */
+    --bs-btn-bg: #0c9ba5e6;
+    --bs-btn-border-color: #0c9ba5e6;
+    --bs-btn-color: #ffffff;
+
+    /* hover */
+    --bs-btn-hover-bg: #44c8d1e6;
+    --bs-btn-hover-border-color: #44c8d1e6;
+    --bs-btn-hover-color: #e9eef5;
+
+    /* active - focus */
+    --bs-btn-active-bg: #37a1a8e6;
+    --bs-btn-active-border-color: #e4e9f3;
+    --bs-btn-active-color: #a8e8ece6;
+
+    border: none;
+    border-radius: 6px;
+    font-size: 20px;
+    line-height: 48px;
+    padding: 0 16px;
+    width: 332px;
+    font-weight: bold;
+}

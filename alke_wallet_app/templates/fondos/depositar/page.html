@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block titulo_web %}
+AlkeWallet | Depositar
+{% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block titulo_pagina %}
+Depositar
+{% endblock %}
+
+{% block location %}
+<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+{% endblock %}
+
+
+{% block content_main %}
+{% include "fondos/depositar/content.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const botones = document.querySelectorAll(".monto-btn");
+        const input_monto = document.getElementById("input_monto");
+
+        botones.forEach(boton => {
+            boton.addEventListener("click", () => {
+                botones.forEach(b => {
+                    b.classList.remove("btn-success");
+                    b.classList.add("btn-outline-success");
+                });
+                input_monto.value = boton.dataset.monto;
+                boton.classList.remove("btn-outline-success");
+                boton.classList.add("btn-success");
+            });
+        });
+    });
+
+</script>
+{% endblock %}

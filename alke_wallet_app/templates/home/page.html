@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block titulo_web %}
+    AlkeWallet | Dashboard
+{% endblock %}
+
+
+
+{% block titulo_pagina %}
+    Resumen financiero
+{% endblock %}
+
+{% block location %}
+    / Dashboard
+{% endblock %}
+
+
+{% block content_main %}
+    {% include "home/content.html" %}
+{% endblock %}
+
+{% load static %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{% static 'home/js/line_chart.js' %}"></script>
+    <script src="{% static 'home/js/pie_chart.js' %}"></script>
+{% endblock %}
