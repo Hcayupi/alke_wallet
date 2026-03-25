@@ -40,7 +40,7 @@
     <!-- Skip links will be dynamically added by accessibility.js -->
     <meta name="supported-color-schemes" content="light dark" />
     <link rel="stylesheet" href="{% static 'adminlte/css/adminlte.css' %}" />
-
+    {% block css%}{% endblock%}
     <!--end::Accessibility Features-->
     <!--begin::Fonts-->
     <link
@@ -108,115 +108,23 @@
             <li class="nav-item d-none d-md-block">
               <a href="{%url 'home'%}" class="nav-link">Home</a>
             </li>
-            <li class="nav-item d-none d-md-block">
-              <a
-                href="#"
-                class="nav-link"
-                data-bs-toggle="modal"
-                data-bs-target="#contactoModal"
-              >
-                Contacto
-              </a>
-            </li>
+        
           </ul>
           <!--end::Start Navbar Links-->
           <!--begin::End Navbar Links-->
           <ul class="navbar-nav ms-auto">
             <!--begin::Navbar Search-->
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                data-widget="navbar-search"
-                href="#"
-                role="button"
-              >
-                <i class="bi bi-search"></i>
-              </a>
-            </li>
             <!--end::Navbar Search-->
             <!--begin::Messages Dropdown Menu-->
             <li class="nav-item dropdown">
-              <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                <i class="bi bi-chat-text"></i>
-                <span class="navbar-badge badge text-bg-danger">3</span>
-              </a>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="{% static 'adminlte/assets/img/user1-128x128.jpg' %}"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        Brad Diesel
-                        <span class="float-end fs-7 text-danger"
-                          ><i class="bi bi-star-fill"></i
-                        ></span>
-                      </h3>
-                      <p class="fs-7">Call me whenever you can...</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
+  
                   <!--end::Message-->
+                </a>
+      
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="{% static 'adminlte/assets/img/user8-128x128.jpg' %}"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        John Pierce
-                        <span class="float-end fs-7 text-secondary">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                      </h3>
-                      <p class="fs-7">I got your message bro</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
-                  <!--end::Message-->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <!--begin::Message-->
-                  <div class="d-flex">
-                    <div class="flex-shrink-0">
-                      <img
-                        src="{% static 'adminlte/assets/img/user3-128x128.jpg' %}"
-                        alt="User Avatar"
-                        class="img-size-50 rounded-circle me-3"
-                      />
-                    </div>
-                    <div class="flex-grow-1">
-                      <h3 class="dropdown-item-title">
-                        Nora Silvester
-                        <span class="float-end fs-7 text-warning">
-                          <i class="bi bi-star-fill"></i>
-                        </span>
-                      </h3>
-                      <p class="fs-7">The subject goes here</p>
-                      <p class="fs-7 text-secondary">
-                        <i class="bi bi-clock-fill me-1"></i> 4 Hours Ago
-                      </p>
-                    </div>
-                  </div>
-                  <!--end::Message-->
                 </a>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer"
@@ -225,38 +133,6 @@
               </div>
             </li>
             <!--end::Messages Dropdown Menu-->
-            <!--begin::Notifications Dropdown Menu-->
-            <li class="nav-item dropdown">
-              <a class="nav-link" data-bs-toggle="dropdown" href="#">
-                <i class="bi bi-bell-fill"></i>
-                <span class="navbar-badge badge text-bg-warning">15</span>
-              </a>
-              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                <span class="dropdown-item dropdown-header"
-                  >15 Notifications</span
-                >
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="bi bi-envelope me-2"></i> 4 new messages
-                  <span class="float-end text-secondary fs-7">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="bi bi-people-fill me-2"></i> 8 friend requests
-                  <span class="float-end text-secondary fs-7">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                  <i class="bi bi-file-earmark-fill me-2"></i> 3 new reports
-                  <span class="float-end text-secondary fs-7">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">
-                  See All Notifications
-                </a>
-              </div>
-            </li>
-            <!--end::Notifications Dropdown Menu-->
             <!--begin::Fullscreen Toggle-->
             <li class="nav-item">
               <a class="nav-link" href="#" data-lte-toggle="fullscreen">
@@ -283,13 +159,11 @@
                 />
                 <span class="d-none d-md-inline">{{user.username}}</span>
               </a>
-              <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+              <ul class="dropdown-menu dropdown-menu-end">
                 <!--begin::Menu Footer-->
                 <li class="user-footer">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
-                  <a href="{%url 'logout'%}" class="btn btn-default btn-flat float-end"
-                    >Sign out</a
-                  >
+            <a href="{%url 'logout'%}" class="btn btn-default btn-flat float-end"
+                    >Sign out</a>
                 </li>
                 <!--end::Menu Footer-->
               </ul>
@@ -342,42 +216,22 @@
 
               <li class="nav-item">
                 <a href="{% url 'depositar'%}" class="nav-link">
-                  <i class="nav-iconbi bi-piggy-bank"></i>
+                  <i class="nav-iconbi bi bi-arrow-right-square-fill"></i>
                   <p>Depositar</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{% url 'retirar' %}" class="nav-link">
-                  <i class="nav-icon bi bi-piggy-bank-fill"></i>
+                  <i class="nav-icon bi bi-arrow-left-square-fill"></i>
                   <p>Retirar</p>
                 </a>
               </li>
-
               <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="nav-icon bi bi bi-cash-coin"></i>
-                  <p>
-                    Transferencias
-                    <i class="nav-arrow bi bi-chevron-right"></i>
-                  </p>
+                <a href="{% url 'transferencia' %}" class="nav-link">
+                  <i class="nav-icon bi bi-arrow-left-right"></i>
+                  <p>Transferencias</p>
                 </a>
-
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon bi bi-cash"></i>
-                      <p>Entre mis cuentas</p>
-                    </a>
-                  </li>
-
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon bi bi-currency-exchange"></i>
-                      <p>A terceros</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li class="nav-item">
                 <a href="{% url 'historial' %}" class="nav-link">
@@ -405,10 +259,11 @@
               </div>
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-end">
+                   {% block location %}{% endblock %}
                   <li class="breadcrumb-item">
-                    <a href="{% url 'home' %}">{{location}}</a>
+                    <a href="{% url 'home' %}">Dashboard</a>
                   </li>
-                  {% block location %}{% endblock %}
+                 
                 </ol>
               </div>
             </div>
@@ -442,71 +297,7 @@
       <!--end::Footer-->
     </div>
     <!--end::App Wrapper-->
-   <!-- Modal Contacto -->
-    <div class="modal fade" id="contactoModal" tabindex="-1">
-      <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Formulario de Contacto</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-            ></button>
-          </div>
-
-          <form method="POST" action="{% url 'contacto' %}" novalidate>
-            {% csrf_token %}
-
-            <div class="modal-body">
-              <div class="mb-3">
-                {{ form.nombre.label_tag }} {{ form.nombre }} 
-                {% if form.nombre.errors %}
-                <div class="text-danger small">{{ form.nombre.errors }}</div>
-                {% endif %}
-              </div>
-
-              <div class="mb-3">
-                {{ form.email.label_tag }} {{ form.email }} 
-                {% if form.email.errors %}
-                <div class="text-danger small">{{ form.email.errors }}</div>
-                {% endif %}
-              </div>
-
-              <div class="mb-3">
-                {{ form.mensaje.label_tag }} {{ form.mensaje }} 
-                {% if form.mensaje.errors %}
-                <div class="text-danger small">{{ form.mensaje.errors }}</div>
-                {% endif %}
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Cancelar
-              </button>
-              <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    {% if form.errors %}
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        var myModal = new bootstrap.Modal(
-          document.getElementById("contactoModal"),
-        );
-        myModal.show();
-      });
-    </script>
-    {% endif %}
-
+   
     <!--begin::Script-->
     <!--begin::Third Party Plugin(OverlayScrollbars)-->
     <script
@@ -567,7 +358,21 @@
       });
     </script>
     {% block scripts%}{%endblock%}
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+{% if messages %}
+  {% for message in messages %}
+    Swal.fire({
+      icon: "error",
+      position: 'top-center',
+      icon: '{{ message.tags }}',
+      title: '{{ message }}',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  {% endfor %}
+{% endif %}
+</script>
 
   </body>
   <!--end::Body-->

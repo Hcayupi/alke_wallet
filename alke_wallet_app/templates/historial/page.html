@@ -3,6 +3,17 @@
     AlkeWallet | Dashboard
 {% endblock %}
 
+{% block css %}
+    <link
+    href="https://cdn.datatables.net/v/dt/dt-2.3.7/datatables.min.css"
+    rel="stylesheet"
+    integrity="sha384-wCnlGUpaekN+Mtc+qIoipdqIqe2dvC7hWyzVg8wajZ1sxKnVTbnyBd7pyx7JT0Su"
+    crossorigin="anonymous"
+    />
+    <link
+    rel="stylesheet"
+    href="https://cdn.datatables.net/2.3.7/css/dataTables.bootstrap5.css"/>
+{% endblock %}
 
 
 {% block titulo_pagina %}
@@ -10,7 +21,7 @@
 {% endblock %}
 
 {% block location %}
-    / Dashboard
+   <li class="breadcrumb-item active" aria-current="page">Historial</li>
 {% endblock %}
 
 
@@ -19,7 +30,25 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript">
-     //   {% include "home/scripts.js" %}
-    </script>
+    <script
+  src="https://code.jquery.com/jquery-3.7.1.js"
+  integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdn.datatables.net/v/dt/dt-2.3.7/datatables.min.js"
+  integrity="sha384-aQ8I1X2x8U0AR8D7C4Ah0OvZlwMslQdN5YDAQBA56jXrrhcECijs/i7H+5DDrlV1"
+  crossorigin="anonymous"
+></script>
+<script>
+  	
+ new DataTable('#tabla-libros', {
+    language: {
+       url: 'https://cdn.datatables.net/plug-ins/2.3.7/i18n/es-CL.json',
+       emptyTable: "No hay movimientos"
+     
+    },
+      order: [[1, 'desc']]
+  });
+</script>
 {% endblock %}

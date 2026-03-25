@@ -1,82 +1,66 @@
 <div class="d-flex justify-content-center align-items-center">
-  <div class="card shadow-sm w-50">
+  <div class="card shadow-sm w-60">
     <div class="card-body">
 
       <div class="text-center">
-        <h5>¿Cuánto dinero quieres depósitar?</h5>
+        <h5>¿Cuánto dinero quieres depósitar a tu cuenta Wallet?</h5>
+        <br/>
       </div>
-      <input id="input_monto" type="number" class="form-control mb-3" placeholder="Monto">
-
-      <div class="row g-2">
-        <div class="col-4">
-          <button class="btn btn-outline-success w-100 monto-btn" data-monto="20000">$20.000</button>
-        </div>
-        <div class="col-4">
-          <button class="btn btn-outline-success w-100 monto-btn" data-monto="50000">$50.000</button>
-        </div>
-        <div class="col-4">
-          <button class="btn btn-outline-success w-100 monto-btn" data-monto="100000">$100.000</button>
-        </div>
-      </div>
-
-      <div>
-        <select class="form-select mt-3" aria-label="Default select example">
-          <option selected>Seleccione tu Banco</option>
-          <option value="1">Banco Estado</option>
-          <option value="2">Banco Falabella</option>
-          <option value="3">Banco Santander</option>
-          <option value="3">Banco de Chile</option>
-          <option value="3">Banco BCI</option>
-          <option value="3">Banco Scotiabanck</option>
-          <option value="3">Banco Itaú</option>
-          <option value="3">Banco BICE</option>
-          <option value="3">Banco Ripley</option>
-        </select>
-      </div>
-
-      <button class="btn mt-4 btn-danger w-100" data-bs-toggle="modal" data-bs-target="#depositoModal">
-        Depositar</button>
-    </div>
-  </div>
-</div>
-
-<!-- Modal Contacto -->
-<div class="modal fade" id="depositoModal" tabindex="-1">
-  <div class="modal-dialog modal-lg w-25 modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title text-center">Nombre banco</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <form method="POST" action="" novalidate>
-
-        <div class="modal-body">
-          <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label for="inputRut" class="col-form-label">Rut</label>
+      <form method="POST" >
+         {% csrf_token %}
+            {{ depositar_form.monto }} 
+             {% if depositar_form.monto.errors %}
+                          <div class="text-danger small">
+                            {{ depositar_form.monto.errors }}
+                          </div>
+                {% endif %}
+                
+          <div class="row g-2">
+            <div class="col-4">
+              <button type="button" class="btn btn-outline-success w-100 monto-btn" data-monto="20000">$20.000</button>
             </div>
-            <div class="col-auto">
-              <input type="password" id="inputRut" class="form-control" aria-describedby="passwordHelpInline">
+            <div class="col-4">
+              <button type="button" class="btn btn-outline-success w-100 monto-btn" data-monto="50000">$50.000</button>
+            </div>
+            <div class="col-4">
+              <button type="button" class="btn btn-outline-success w-100 monto-btn" data-monto="100000">$100.000</button>
             </div>
           </div>
-           <div class="row g-3 align-items-center">
-            <div class="col-auto">
-              <label for="inputClave" class="col-form-label">Clave</label>
+
+          <div class="row mt-2">
+            <div class="col-4">
+              <label class="col-form-label">{{ depositar_form.entidad_bancaria.label_tag}} </label>
             </div>
-            <div class="col-auto">
-              <input type="password" id="inputClave" class="form-control" aria-describedby="passwordHelpInline">
+
+            <div class="col-8">
+              {{depositar_form.entidad_bancaria}}
             </div>
           </div>
-        </div>
 
-        <div class="modal-footer text-center">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary">Continuar</button>
+          <div class="row mt-2">
+            <div class="col-4">
+              <label class="col-form-label"> {{ depositar_form.tarjeta_bancaria.label_tag}} </label>
+            </div>
+
+            <div class="col-8">
+             {{depositar_form.tarjeta_bancaria}}
+            </div>
+          </div>
+
+          <div class="row mb-3 mt-2">
+              <label class="col-sm-4 col-form-label"> 
+                    {{ depositar_form.observacion.label_tag}} 
+              </label>
+
+              <div class="col-sm-8">
+                    {{depositar_form.observacion}}
+              </div>
+               
+          </div>
+
+          <button type="submit" class="btn mt-4 btn-success w-100" >
+            Depositar</button>
         </div>
-      </form>
-    </div>
+  </form>
   </div>
 </div>

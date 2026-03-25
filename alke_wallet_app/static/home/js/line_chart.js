@@ -6,6 +6,7 @@ function cargarEvolucionLineChart() {
   fetch("/api/evolucion/")
     .then((response) => response.json())
     .then((data) => {
+       console.log(data);
       renderizarLineChart(data);
     })
     .catch((error) => {
@@ -32,8 +33,8 @@ function renderizarLineChart(data) {
           fill: true,
         },
         {
-          label: "Gastos",
-          data: data.gastos,
+          label: "Egresos",
+          data: data.egresos,
           borderColor: "#dc3545",
           backgroundColor: "rgba(220,53,69,0.1)",
           tension: 0.4,

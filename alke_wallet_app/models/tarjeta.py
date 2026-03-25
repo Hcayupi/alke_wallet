@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from .cuenta_bancaria import CuentaBancaria
 
 class Tarjeta(models.Model):
 
@@ -9,11 +9,11 @@ class Tarjeta(models.Model):
         ("prepago", "Prepago")
     ]
 
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
-    numero_tarjeta = models.CharField(max_length= 20)
+    cuenta_bancaria = models.ForeignKey(CuentaBancaria,null=True, on_delete=models.SET_NULL, related_name="tarjetas")
+    numero_tarjeta = models.CharField(max_length= 19)
     tipo_tarjeta = models.CharField(max_length= 20,choices=TIPO_TARJETA)
     fecha_expiracion = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.usuario.first_name} - {self.tipo_tarjeta}"
+        return f"{self.numero_tarjeta}"

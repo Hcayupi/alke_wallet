@@ -12,7 +12,7 @@ Depositar
 {% endblock %}
 
 {% block location %}
-<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+<li class="breadcrumb-item active" aria-current="page">Depositar</li>
 {% endblock %}
 
 
@@ -24,7 +24,7 @@ Depositar
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const botones = document.querySelectorAll(".monto-btn");
-        const input_monto = document.getElementById("input_monto");
+        const input_monto = document.getElementById("id_monto");
 
         botones.forEach(boton => {
             boton.addEventListener("click", () => {
@@ -32,11 +32,34 @@ Depositar
                     b.classList.remove("btn-success");
                     b.classList.add("btn-outline-success");
                 });
+
                 input_monto.value = boton.dataset.monto;
                 boton.classList.remove("btn-outline-success");
                 boton.classList.add("btn-success");
             });
         });
+    });
+
+    const cuentaSelect = document.getElementById('cuenta-select');
+    const tarjetaSelect = document.getElementById('tarjeta-select');
+
+    cuentaSelect.addEventListener('change', function() {
+        const cuentaId = this.value;
+        tarjetaSelect.innerHTML = '<option value="">Seleccione una tarjeta</option>';
+
+        if (cuentaId) {
+            fetch(`/api/tarjetas/?cuenta_id=${cuentaId}`)
+                .then(response => response.json())
+                .then(data => {
+                    data.forEach(t => {
+                        const option = document.createElement('option');
+                        option.value = t.id;
+                        option.text = t.numero_tarjeta + ' (' + t.tipo_tarjeta + ')';
+                        tarjetaSelect.appendChild(option);
+                        tarjetaSelect.value=t.id
+                    });
+                });
+        }
     });
 
 </script>

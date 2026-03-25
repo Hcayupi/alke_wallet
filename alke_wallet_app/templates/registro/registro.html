@@ -28,40 +28,40 @@
             <h3 class="mb-0 fw-bold">Registro de usuario</h3>
           </div>
           <div class="card-body">
-            {{ form.non_field_errors }}
+            {{ signup_form.non_field_errors }}
             <form method="POST">
               {% csrf_token %}
 
               <div class="mb-3">
-                <label for="{{ form.username.id_for_label }}" class="form-label"
+                <label for="{{ signup_form.username.id_for_label }}" class="form-label"
                   >Usuario</label
                 >
-                {{ form.username }} {{ form.username.errors }}
+                {{ signup_form.username }} {{ signup_form.username.errors }}
               </div>
 
               <div class="mb-3">
-                <label for="{{ form.email.id_for_label }}" class="form-label"
+                <label for="{{ signup_form.email.id_for_label }}" class="form-label"
                   >Email address</label
                 >
-                {{ form.email }} {{ form.email.errors }}
+                {{ signup_form.email }} {{ signup_form.email.errors }}
               </div>
 
               <div class="mb-3">
                 <label
-                  for="{{ form.password1.id_for_label }}"
+                  for="{{ signup_form.password1.id_for_label }}"
                   class="form-label"
                   >Password</label
                 >
-                {{ form.password1 }} {{ form.password1.errors }}
+                {{ signup_form.password1 }} {{ signup_form.password1.errors }}
               </div>
 
               <div class="mb-3">
                 <label
-                  for="{{ form.password2.id_for_label }}"
+                  for="{{ signup_form.password2.id_for_label }}"
                   class="form-label"
                   >Confirm Password</label
                 >
-                {{ form.password2 }} {{ form.password2.errors }}
+                {{ signup_form.password2 }} {{ signup_form.password2.errors }}
               </div>
               <div class="separatorLine"></div>
               <button type="submit" class="btn buttonGreen w-100">

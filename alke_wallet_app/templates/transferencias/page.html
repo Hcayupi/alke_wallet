@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block titulo_web %}
+    AlkeWallet | Dashboard
+{% endblock %}
+
+
+
+{% block titulo_pagina %}
+    Transferencias
+{% endblock %}
+
+{% block location %}
+   <li class="breadcrumb-item active" aria-current="page">Transferencias</li>
+{% endblock %}
+
+
+{% block content_main %}
+    {% include "transferencias/content.html" %}
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+    const destinatarioSelect = document.getElementById('destinatario-select');
+    const idWallet = document.getElementById("id_wallet_destino");
+
+    destinatarioSelect.addEventListener('change', function() {
+        const id_destinatario = this.value;
+
+        if (id_destinatario) {
+            fetch(`/api/wallet/?id_destinatario=${id_destinatario}`)
+                .then(response => response.json())
+                .then(data => {
+                        idWallet.value = data.cod_wallet;
+                });
+        }
+    });
+</script>
+
+{% endblock %}

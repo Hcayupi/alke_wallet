@@ -1,39 +1,39 @@
 <!-- INICIO --  HISTORIAL DE TRANSACCIONES -->
 
 <div class="card shadow-sm mt-4">
-    <div class="card-body">
-        <h5>Historial de transacciones</h5>
-        <table class="table table-striped mt-3">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Tipo</th>
-                    <th>Detalle</th>
-                    <th>Monto</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>10/06/2025</td>
-                    <td>Depósito</td>
-                    <td>Ingreso inicial</td>
-                    <td class="text-success">$300.000</td>
-                </tr>
-                <tr>
-                    <td>12/06/2025</td>
-                    <td>Retiro</td>
-                    <td>Cuenta 12345</td>
-                    <td class="text-danger">-$50.000</td>
-                </tr>
-                <tr>
-                    <td>12/06/2025</td>
-                    <td>Envío</td>
-                    <td>Cuenta 12345</td>
-                    <td class="text-danger">$200.000</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <div class="card-header bg-success-subtle text-center"><h4>Historial de transacciones</h4></div>
+  <div class="card-body">
+    
+    <table  class="table table-striped" id="tabla-libros">
+      <thead>
+        <tr>
+          <th scope="col">Codigo transacción</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Cargos o Giros</th>
+          <th scope="col">Abonos o Depósitos</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for movimiento in movimientos%}
+        <tr>
+          <td scope="row">{{movimiento.codigo}}</td>
+          <td data-order="{{ movimiento.fecha|date:'Y-m-d H:i:s' }}"> {{movimiento.fecha|date:"d M y - H:i" }}</td>
+          <td>{{movimiento.descripcion}}</td>
+          {% if movimiento.cargos_giros == "$0"%}
+            <td>{{movimiento.cargos_giros}}</td>
+          {% else%}
+          <td class="text-danger">{{movimiento.cargos_giros}}</td>
+          {% endif%}
 
-<!-- FIN -  HISTORIAL DE TRANSACCIONES -->
+          {% if movimiento.abonos_depositos == "$0"%}
+            <td>{{movimiento.abonos_depositos}}</td>
+          {% else%}
+          <td class="text-primary">{{movimiento.abonos_depositos}}</td>
+          {% endif%}
+
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table><!-- INICIO --  HISTORIAL DE TRANSACCIONES -->

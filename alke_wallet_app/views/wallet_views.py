@@ -1,10 +1,18 @@
+import uuid
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from django.http import JsonResponse
-from .forms.contact_forms import ContactoForm
-from .forms.user_forms import SignUpForm
-from .forms.login_forms import LoginForm
+
+from alke_wallet_app.forms.tarjeta_form import TarjetaForm
+
+from ..services.historial_services import historial_transacciones_service
+from ..services.historial_services import ingresos_gastos_service
+from ..forms.contact_form import ContactoForm
+from ..forms.user_form import SignUpForm
+from ..forms.login_form import LoginForm
+from ..models.wallet import Wallet
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
@@ -21,7 +29,7 @@ def login_view(request):
 
             user = form.get_user()
             login(request, user)
-
+            
             return redirect("home")
 
         else:
@@ -30,7 +38,7 @@ def login_view(request):
     else:
         form = LoginForm(request)
 
-    return render(request, "login/login.html", {"form": form})
+    return render(request, "login/login.html", {"login_form": form})
 
 
 def logout_view(request):
@@ -52,6 +60,8 @@ def signup_view(request):
             user = form.save()
             login(request, user)
 
+            Wallet.objects.create(usuario = user, balance= 0)
+
             messages.success(request, "Usuario creado correctamente")
 
             return redirect("home")
@@ -59,78 +69,49 @@ def signup_view(request):
     else:
         form = SignUpForm()
 
-    return render(request, "registro/registro.html", {"form": form})
+    return render(request, "registro/registro.html", {"signup_form": form})
 
 
 def dashboard_view(request):
-    redirect("home")
+    return redirect("home")
 
 
 @login_required
 def home_view(request):
-    movimientos = [
-        {
-            "fecha": "02/03/2026",
-            "categoria": "Alimentación",
-            "tipo": "Gasto",
-            "monto": 80000,
-        },
-        {
-            "fecha": "01/03/2026",
-            "categoria": "Salario",
-            "tipo": "Ingreso",
-            "monto": 1200000,
-        },
-        {
-            "fecha": "28/02/2026",
-            "categoria": "Transporte",
-            "tipo": "Gasto",
-            "monto": 15000,
-        },
-        {
-            "fecha": "28/02/2026",
-            "categoria": "Transporte",
-            "tipo": "Gasto",
-            "monto": 18000,
-        },
-    ]
-
+    
     if "form_data" in request.session:
-        form = ContactoForm(request.session["form_data"])
-        form._errors = request.session["form_errors"]
+        tarjeta_form = TarjetaForm(request.session["form_data"])
+        tarjeta_form._errors = request.session["form_errors"]
 
         del request.session["form_data"]
         del request.session["form_errors"]
     else:
-        form = ContactoForm()
+        tarjeta_form = TarjetaForm()
+
+
+
+    wallet = request.user.wallet
+
+    resumen = ingresos_gastos_service(request)
+    
+    total_ingresos = sum(resumen["ingresos"])
+    total_egresos = sum(resumen["egresos"])
 
     context = {
-        "movimientos": movimientos,
+        "tarjeta_form": tarjeta_form,
         "location": "Dashboard",
-        "form": form,
+        "saldo": wallet.balance,
+        "ingresos":total_ingresos,
+        "egresos":total_egresos,
+        "codigo_wallet": wallet.codigo
     }
     return render(request, "home/page.html", context)
 
-
-@login_required
-# Inicio - Sección Fondos
-def depositar_view(request):
-    contex = {"location": "Depositar"}
-    return render(request, "fondos/depositar/page.html", contex)
-
-
-@login_required
-def retirar_view(request):
-    contex = {"location": "Retirar"}
-    return render(request, "fondos/retirar/page.html", contex)
-
-
-# Fin - Sección Fondos
-
-
 @login_required
 def historial_view(request):
-    context = {"location": "Movimientos"}
+    movimientos = historial_transacciones_service(request)
+
+    context = {"location": "Movimientos", "movimientos":movimientos}
     return render(request, "historial/page.html", context)
 
 
@@ -218,17 +199,5 @@ def contacto_view(request):
 
 
 def evolucion_api(request):
-    data = {
-        "labels": ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio"],
-        "ingresos": [150000, 230000, 180000, 290000, 310000, 270000],
-        "gastos": [90000, 120000, 80000, 150000, 140000, 100000],
-    }
-    return JsonResponse(data)
-
-
-def distribucion_api(request):
-    data = {
-        "labels": ["Alimentación", "Transporte", "Servicios", "Entretenimiento"],
-        "data": [250, 150, 300, 100],
-    }
+    data = ingresos_gastos_service(request)
     return JsonResponse(data)

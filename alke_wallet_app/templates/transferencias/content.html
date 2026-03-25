@@ -1,0 +1,162 @@
+<div class="d-flex justify-content-end">
+  <a
+    class="btn btn-success bi-person-fill-add mt-3"
+     data-bs-toggle="modal"
+     data-bs-target="#destinatarioModal">
+    Nuevo destinatario
+  </a>
+</div>
+
+<div class="d-flex justify-content-center align-items-center ">
+  <div class="card  w-40 mt-4">
+    <div class="card-body">
+
+      <div class="text-center">
+        <h5>Formulario de Transferencia</h5>
+        <br/>
+      </div>
+      <form method="POST" >
+         {%csrf_token%}
+          <div class="row mt-2">
+            <div class="col-4">
+              <label class="col-form-label">Destinatario </label>
+            </div>
+
+            <div class="col-8">
+              {{transferencia_form.destinatario}}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-4">
+              <label class="col-form-label">Codigo Wallet </label>
+            </div>
+
+            <div class="col-8">
+              {{transferencia_form.wallet_destino}}
+            </div>
+          </div>
+
+          <div class="row mt-2">
+            <div class="col-4">
+              <label class="col-form-label"> {{ transferencia_form.monto.label_tag}} </label>
+            </div>
+
+            <div class="col-8">
+             {{transferencia_form.monto}}
+            </div>
+          </div>
+
+          <div class="row mb-3 mt-2">
+              <label class="col-sm-4 col-form-label"> 
+                    {{ transferencia_form.observacion.label_tag}} 
+              </label>
+
+              <div class="col-sm-8">
+                    {{transferencia_form.observacion}}
+              </div>
+               
+          </div>
+
+          <button type="submit" class="btn mt-4 btn-success w-100" >
+            Transferir</button>
+        </div>
+  </form>
+  </div>
+</div>
+
+  <div class="modal fade" id="destinatarioModal" tabindex="-1">
+  <div class="modal-dialog w-30 modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header ">
+        <h5 class="modal-title text-center">Formulario de registro de destinatario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action={% url 'destinatario'%}   novalidate>
+        {% csrf_token %}
+
+        <div class="modal-body px-4">
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ destinatario_form.wallet_codigo.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ destinatario_form.wallet_codigo }}
+              {% if destinatario_form.wallet_codigo.errors %}
+                <div class="text-danger small">
+                  {{ destinatario_form.wallet_codigo.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ destinatario_form.nombre.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ destinatario_form.nombre }}
+              {% if destinatario_form.nombre.errors %}
+                <div class="text-danger small">
+                  {{ destinatario_form.nombre.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ destinatario_form.apellido.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ destinatario_form.apellido }}
+              {% if destinatario_form.apellido.errors %}
+                <div class="text-danger small">
+                  {{ destinatario_form.apellido.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ destinatario_form.email.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ destinatario_form.email }}
+              {% if destinatario_form.email.errors %}
+                <div class="text-danger small">
+                  {{ destinatario_form.email.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ destinatario_form.apodo.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ destinatario_form.apodo }}
+              {% if destinatario_form.apodo.errors %}
+                <div class="text-danger small">
+                  {{ destinatario_form.apodo.errors }}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="modal-footer px-4">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

@@ -15,7 +15,7 @@ class LoginForm(AuthenticationForm):
     )
     password = forms.CharField(
         label="Contraseña",
-        widget=forms.TextInput(
+        widget=forms.PasswordInput(
             attrs={"class": "form-control", "id": "idPass", "placeholder": "********"}
         ),
     )
