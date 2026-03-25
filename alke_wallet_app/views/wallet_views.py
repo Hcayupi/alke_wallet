@@ -88,8 +88,6 @@ def home_view(request):
     else:
         tarjeta_form = TarjetaForm()
 
-
-
     wallet = request.user.wallet
 
     resumen = ingresos_gastos_service(request)

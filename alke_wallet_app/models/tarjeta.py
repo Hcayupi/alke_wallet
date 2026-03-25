@@ -10,9 +10,10 @@ class Tarjeta(models.Model):
     ]
 
     cuenta_bancaria = models.ForeignKey(CuentaBancaria,null=True, on_delete=models.SET_NULL, related_name="tarjetas")
-    numero_tarjeta = models.CharField(max_length= 19)
-    tipo_tarjeta = models.CharField(max_length= 20,choices=TIPO_TARJETA)
-    fecha_expiracion = models.DateField()
+    numero_tarjeta = models.CharField(max_length= 19,  null= False)
+    tipo_tarjeta = models.CharField(max_length= 20,choices=TIPO_TARJETA, null= False)
+    fecha_expiracion = models.DateField( null= False)
+    marca = models.CharField(max_length=20, null= False, default="credito")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

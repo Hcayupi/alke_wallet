@@ -14,10 +14,12 @@ from .views.transaccion_views import (
     depositar_view,
     transferencias_view,
     registro_destinatario,
-    api_codigo_wallet_destino
+    api_codigo_wallet_destino,
+    
 )
 from .views.tarjetas_views import(
-    api_tarjetas
+    api_tarjetas,
+    registrar_tarjeta
 )
 
 urlpatterns = [
@@ -31,6 +33,7 @@ urlpatterns = [
     path("transferencias/", transferencias_view, name="transferencia"),
     path("destinatario/",registro_destinatario, name="destinatario"),
     path("historial/", historial_view, name="historial"),
+    path("registrar_tarjeta/", registrar_tarjeta, name="reg_tarjeta"),
     path("contacto/", contacto_view, name="contacto"),
     path("api/wallet/", api_codigo_wallet_destino, name="cod_wallet_api"),
     path("api/tarjetas/",api_tarjetas, name="tarjetas_api"),
