@@ -4,10 +4,13 @@
     AlkeWallet | Dashboard
 {% endblock %}
 
-{% block css%}{% endblock%}
+{% block css%}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
+{% endblock%}
 
 {% block titulo_pagina %}
-    Wallet ID <strong class="text-success">{{codigo_wallet}}</strong>
+    <img class="mb-3" width="40" height="40" src="https://img.icons8.com/3d-fluency/94/card-wallet.png" alt="card-wallet"/>Wallet ID:  <strong class="text-success">{{codigo_wallet}}</strong>
 {% endblock %}
 
 {% block location %}
@@ -22,6 +25,35 @@
 {% load static %}
 
 {% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{% static 'home/js/line_chart.js' %}"></script>
+
+    {% if cbanco_form.errors %}
+        <script>
+            var modalCuentaB = new bootstrap.Modal(document.getElementById('cuentaBancariaModal'));
+            modalCuentaB.show();
+        </script>
+    {% endif %}
+
+    {% if tarjeta_form.errors %}
+        <script>
+            var modalTarjeta = new bootstrap.Modal(document.getElementById('tarjetaModal'));
+            modalTarjeta.show();
+        </script>
+    {% endif %}
+
+    <script>
+
+    flatpickr("#id_fecha_expiracion", {
+        dateFormat: "m/y",
+        plugins: [
+            new monthSelectPlugin({
+                shorthand: true,
+                dateFormat: "m/y"
+            })
+            ]
+    });
+    </script>
 {% endblock %}

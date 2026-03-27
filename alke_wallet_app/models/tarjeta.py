@@ -13,7 +13,7 @@ class Tarjeta(models.Model):
     numero_tarjeta = models.CharField(max_length= 19,  null= False)
     tipo_tarjeta = models.CharField(max_length= 20,choices=TIPO_TARJETA, null= False)
     fecha_expiracion = models.DateField( null= False)
-    marca = models.CharField(max_length=20, null= False, default="credito")
+    marca = models.CharField(max_length=20, null= False, default="visa")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

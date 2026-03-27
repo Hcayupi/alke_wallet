@@ -1,174 +1,136 @@
 {% load custom_filters %}
 <div class="row">
-    <!--begin::Col-->
-    <div class="col-lg col-6">
-        <!--begin::Small Box Widget 1-->
-        <div class="small-box text-bg-success bg-gradient">
-            <div class="inner">
-                <h3>
-                   {{ saldo|clp }}
-                </h3>
-                <p>Saldo</p>
-            </div>
-  
-            <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M2 7a2 2 0 0 1 2-2h16v2H4v10h16v2H4a2 2 0 0 1-2-2V7zm14 3a2 2 0 1 0 0 4h4v-4h-4z"/>
-            </svg>
-
-               <div class="small-box-footer">
-                <a href="{% url 'historial' %}"
-                  class="text-white text-decoration-none">
-                    Mis transacciones
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg col-6">
-        <div class="small-box text-bg-primary bg-gradient">
-            <div class="inner">
-                <h3> {{ ingresos|clp }}</h3>
-                <p>Ingresos</p>
-            </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M4 12l1.41 1.41L10 8.83V20h2V8.83l4.59 4.58L18 12l-6-6-6 6z"/>
-            </svg>
-
-            <div class="small-box-footer">
-                <a href="{% url 'depositar'%}"
-                  class="text-white text-decoration-none">
-                    Depositar dinero
-                </a>
-            </div>
-
-        </div>
-    </div>
-    <div class="col-lg col-6">
-        <div class="small-box text-bg-danger bg-gradient">
-            <div class="inner">
-                <h3> {{ egresos|clp }}</h3>
-                <p>Egresos</p>
-            </div>
-            <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M4 12l1.41-1.41L10 15.17V4h2v11.17l4.59-4.58L18 12l-6 6-6-6z"/>
-            </svg>
-
-             <div class="small-box-footer">
-                <a href="{% url 'retirar' %}"
-                  class="text-white text-decoration-none">
-                    Retirar dinero
-                </a>
-            </div>
-
-        </div>
-    </div>
-     <div class="col-lg col-6">
-        <div class="small-box text-bg-dark bg-gradient">
-            <div class="inner">
-                <h3> Tarjetas</h3>
-                <p>Tarjetas</p>
-            </div>
-            <svg class="small-box-icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true">
-                <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
-                <path fill-rule="evenodd" d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
-            </svg>
-            <div class="small-box-footer">
-                <a href=""
-                  data-bs-toggle="modal"
-                  data-bs-target="#tarjetaModal"
-                  class="text-white text-decoration-none">
-                    Registrar tarjeta
-                </a>
-            </div>
-        </div>
-    </div>
-    <!--end::Col-->
-    <!--begin::Row-->
-    <div class="row">
-        <!-- Start col -->
-        <div class="col-lg">
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h3 class="card-title">Evolución Mensual</h3>
-                </div>
-                <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="evolucion-chart" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
-            <!-- /.card -->
-        </div>
-                <!-- Start col -->
-    </div>
-    </div>
-    <!-- /.row (main row) -->
-
-    <div class="modal fade" id="tarjetaModal" tabindex="-1">
-  <div class="modal-dialog w-30 modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header ">
-        <h5 class="modal-title text-center">Registro de tarjeta</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <!--begin::Col-->
+  <div class="col-lg col-6">
+    <!--begin::Small Box Widget 1-->
+    <div class="small-box text-bg-success bg-gradient">
+      <div class="inner">
+        <h3>{{ saldo|clp }}</h3>
+        <p>Saldo</p>
       </div>
-      <form method="POST" action="{% url 'reg_tarjeta'%}"  novalidate>
-        {% csrf_token %}
 
-      
-        <div class="modal-body px-4">
+      <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M2 7a2 2 0 0 1 2-2h16v2H4v10h16v2H4a2 2 0 0 1-2-2V7zm14 3a2 2 0 1 0 0 4h4v-4h-4z"
+        />
+      </svg>
 
-   
-          <div class="row align-items-center mb-3">
-            <div class="col-md-4">
-              {{ tarjeta_form.cuenta_bancaria.label_tag }}
-            </div>
-            <div class="col-md-8">
-              {{ tarjeta_form.cuenta_bancaria }}
-              {% if tarjeta_form.cuenta_bancaria.errors %}
-                <div class="text-danger small">
-                  {{ tarjeta_form.cuenta_bancaria.errors }}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-3">
-            <div class="col-md-4">
-              {{ tarjeta_form.tarjeta_bancaria.label_tag }}
-            </div>
-            <div class="col-md-8">
-              {{ tarjeta_form.tarjeta_bancaria }}
-              {% if tarjeta_form.tarjeta_bancaria.errors %}
-                <div class="text-danger small">
-                  {{ tarjeta_form.tarjeta_bancaria.errors }}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-
-          <div class="row align-items-center mb-3">
-            <div class="col-md-4">
-              {{ tarjeta_form.fecha_expiracion.label_tag }}
-            </div>
-            <div class="col-md-8">
-              {{ tarjeta_form.fecha_expiracion }}
-              {% if tarjeta_form.fecha_expiracion.errors %}
-                <div class="text-danger small">
-                  {{ tarjeta_form.fecha_expiracion.errors }}
-                </div>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer px-4">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-            Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        </div>
-
-      </form>
+      <div class="small-box-footer">
+        <a href="{% url 'historial' %}" class="text-white text-decoration-none">
+          Mis transacciones
+        </a>
+      </div>
     </div>
   </div>
+  <div class="col-lg col-6">
+    <div class="small-box text-bg-primary bg-gradient">
+      <div class="inner">
+        <h3>{{ ingresos|clp }}</h3>
+        <p>Ingresos</p>
+      </div>
+      <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M4 12l1.41 1.41L10 8.83V20h2V8.83l4.59 4.58L18 12l-6-6-6 6z" />
+      </svg>
+
+      <div class="small-box-footer">
+        <a href="{% url 'depositar'%}" class="text-white text-decoration-none">
+          Depositar dinero
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg col-6">
+    <div class="small-box text-bg-danger bg-gradient">
+      <div class="inner">
+        <h3>{{ egresos|clp }}</h3>
+        <p>Egresos</p>
+      </div>
+      <svg class="small-box-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path
+          d="M4 12l1.41-1.41L10 15.17V4h2v11.17l4.59-4.58L18 12l-6 6-6-6z"
+        />
+      </svg>
+
+      <div class="small-box-footer">
+        <a href="{% url 'retirar' %}" class="text-white text-decoration-none">
+          Retirar dinero
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg col-6">
+    <div class="small-box text-bg-dark bg-gradient">
+      <div class="inner">
+        <h3>{{tarjetas}}</h3>
+        <p>Tarjetas</p>
+      </div>
+      <svg
+        class="small-box-icon"
+        fill="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <path d="M4.5 3.75a3 3 0 0 0-3 3v.75h21v-.75a3 3 0 0 0-3-3h-15Z" />
+        <path
+          fill-rule="evenodd"
+          d="M22.5 9.75h-21v7.5a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3v-7.5Zm-18 3.75a.75.75 0 0 1 .75-.75h6a.75.75 0 0 1 0 1.5h-6a.75.75 0 0 1-.75-.75Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <div class="small-box-footer">
+        <a
+          href=""
+          data-bs-toggle="modal"
+          data-bs-target="#"
+          class="text-white text-decoration-none"
+        >
+          Ver tarjetas
+        </a>
+      </div>
+    </div>
+  </div>
+  <!--end::Col-->
+  <div class="row mb-3 text-center">
+    <div class="col-lg">
+      <button type="button" 
+      class="btn btn-warning bg-gradient"
+      data-bs-toggle="modal"
+      data-bs-target="#cuentaBancariaModal">
+        Registrar cuenta bancaria
+      </button>
+    </div>
+    <div class="col-lg">
+      <button
+        type="button"
+        class="btn btn-dark bg-gradient" 
+        data-bs-toggle="modal"
+        data-bs-target="#tarjetaModal"
+      >
+        Registrar tarjeta bancaria
+      </button>
+    </div>
+  </div>
+
+  <!--begin::Row-->
+  <div class="row">
+    <!-- Start col -->
+    <div class="col-lg">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">Evolución Mensual</h3>
+        </div>
+        <div class="card-body">
+          <div class="chart-container">
+            <canvas id="evolucion-chart" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- Start col -->
+  </div>
 </div>
+<!-- /.row (main row) -->
+{% include "home/reg_cuenta_bancaria_modal.html"%}
+{% include "home/reg_tarjeta_modal.html"%}

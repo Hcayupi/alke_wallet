@@ -1,6 +1,7 @@
 from django.db.models.functions import Coalesce, ExtractMonth
 from django.db.models import Sum, Case, When, IntegerField
 from alke_wallet_app.enum.tipo_direccion_enum import TipoDireccion
+from alke_wallet_app.models.destinatarios import Destinatario
 from alke_wallet_app.models.transaccion import Transaccion
 from alke_wallet_app.utils.utilities import formatear_monto, parseMonth
 
@@ -15,6 +16,25 @@ def historial_transacciones_service(request):
             "descripcion": f"{transaccion.get_tipo_transaccion_display()}",
             "cargos_giros": f"{formatear_monto(transaccion.monto)}" if transaccion.tipo_direccion == "debito" else "$0",
             "abonos_depositos" : f"{formatear_monto(transaccion.monto)}" if transaccion.tipo_direccion == "credito" else "$0"
+            
+            })
+    return data
+
+def historial_transferencias_service(request):
+    transacciones = Transaccion.objects.filter(wallet= request.user.wallet,tipo_transaccion="transferencia" ).order_by("-id")
+
+    data = []
+    for transaccion in transacciones:
+
+        destinatario = Destinatario.objects.filter(wallet_codigo = transaccion.wallet_tercero.codigo).first()
+
+        data.append({
+            "codigo": transaccion.referencia,
+            "fecha": transaccion.created_at,
+            "descripcion": f"{transaccion.get_tipo_transaccion_display()}",
+            "destinatario": f"{destinatario.apodo}",
+            "wallet_destino": f"{destinatario.wallet_codigo}",
+            "monto" : f"{formatear_monto(transaccion.monto)}"
             
             })
     return data

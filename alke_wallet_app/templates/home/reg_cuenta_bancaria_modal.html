@@ -1,0 +1,73 @@
+
+<div class="modal fade" id="cuentaBancariaModal" tabindex="-1">
+  <div class="modal-dialog w-30 modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header justify-content-center position-relative">
+        <h5 class="modal-title">Formulario de registro de cuenta bancaria</h5>
+        <input type="hidden" name="form_type" value="cuenta">
+          <button
+          type="button"
+          class="btn-close position-absolute end-0 me-3"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+      <form method="POST" action="{% url 'cuenta_bancaria'%}" novalidate>
+        {% csrf_token %}
+
+        <div class="modal-body px-4">
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4 text-danger">
+              {{ cbanco_form.nombre_banco.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ cbanco_form.nombre_banco }} 
+              {% if cbanco_form.nombre_banco.errors %}
+              <div class="text-danger small">
+                {{ cbanco_form.nombre_banco.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ cbanco_form.numero_cuenta.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ cbanco_form.numero_cuenta }} 
+              {% if cbanco_form.numero_cuenta.errors %}
+              <div class="text-danger small">
+                {{ cbanco_form.numero_cuenta.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="row align-items-center mb-3">
+            <div class="col-md-4">
+              {{ cbanco_form.tipo_cuenta.label_tag }}
+            </div>
+            <div class="col-md-8">
+              {{ cbanco_form.tipo_cuenta }} 
+              {% if cbanco_form.tipo_cuenta.errors %}
+              <div class="text-danger small">
+                {{ cbanco_form.tipo_cuenta.errors.0 }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer px-4">
+          <button
+            type="button"
+            class="btn btn-dark"
+            data-bs-dismiss="modal"
+          >
+            Cancelar
+          </button>
+          <button type="submit" class="btn btn-success">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

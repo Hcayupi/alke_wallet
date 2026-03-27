@@ -1,4 +1,4 @@
-from pyexpat.errors import messages
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -9,7 +9,8 @@ from alke_wallet_app.enum.tipo_transaccion_enum import TipoTransaccion
 
 from alke_wallet_app.forms.destinatario_form import DestinatarioForm
 from alke_wallet_app.models.wallet import Wallet
-from alke_wallet_app.services.errores import SaldoInsuficienteError
+from alke_wallet_app.services.errores import SaldoInsuficienteError,CreacionDestinatarioError,TransferenciaError
+from alke_wallet_app.services.historial_services import historial_transferencias_service
 from alke_wallet_app.services.transacciones_service import transferir
 from alke_wallet_app.utils.utilities import formatear_monto
 from ..forms.depositar_form import DepositarForm
@@ -54,7 +55,7 @@ def depositar_view(request):
                     monto=form.cleaned_data["monto"],
                     descripcion=form.cleaned_data.get("descripcion", "")
                 )
-
+                messages.success(request, "Depósito ingresado con éxito")
                 return redirect("depositar")
 
     else:
@@ -84,6 +85,7 @@ def retirar_view(request):
                     monto=form.cleaned_data["monto"],
                     descripcion=form.cleaned_data.get("descripcion", "")
             )
+            messages.success(request, "Retiro ejecutado con éxito")
     else:
         form = RetiroForm()
     balance = request.user.wallet.balance
@@ -100,10 +102,11 @@ def retirar_view(request):
 
 @login_required
 def transferencias_view(request):
-
+    
     if "form_data" in request.session:
         destinatario_form = DestinatarioForm(request.session["form_data"])
-        destinatario_form._errors = request.session["form_errors"]
+        destinatario_form.errors.update(request.session["form_errors"])
+
 
         del request.session["form_data"]
         del request.session["form_errors"]
@@ -120,18 +123,25 @@ def transferencias_view(request):
           
                try:
                     transferir(origen.id, destino.id, monto)
+                    messages.success(request, "¡Transferencia ralizada con exito!")
+                    return redirect("transferencia")
 
                except SaldoInsuficienteError as e:
                     messages.error(request, str(e))
     else:
         transferencia_form = TransferenciaForm(usuario = request.user)
+    
+
+    hitorial_transferencias = historial_transferencias_service(request)
+
 
     context = {
+            "hitorial_transferencias":hitorial_transferencias,
             "transferencia_form":transferencia_form, 
             "destinatario_form":destinatario_form, 
             "location": "Transferencia",
     }
-     
+
     return render(request, "transferencias/page.html", context)
 
 
@@ -145,11 +155,21 @@ def registro_destinatario(request):
 
             nuevo_destinatario = destinatario_form.save(commit=False)
             nuevo_destinatario.usuario = request.user
-            destinatario_form.save()
+            nuevo_destinatario.save()
             
             messages.success(request, "Destinatario creado correctamente")
 
             return redirect("transferencia")
+        else:
+            request.session["form_data"] = request.POST
+            request.session["form_errors"] = destinatario_form.errors
+            return redirect("transferencia")
+
+    else:
+        destinatario_form = DestinatarioForm()
+
+    return redirect("transferencia")
+
 
 def api_codigo_wallet_destino(request):
      id_destinatario = request.GET.get("id_destinatario")

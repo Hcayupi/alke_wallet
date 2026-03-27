@@ -209,33 +209,33 @@
             >
               <li class="nav-item menu-open">
                 <a href="{% url 'home' %}" class="nav-link">
-                  <i class="nav-icon bi bi-wallet2"></i>
+                 <img width="30" height="30" src="https://img.icons8.com/3d-fluency/94/home.png" alt="home"/>
                   <p>Dashboard</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{% url 'depositar'%}" class="nav-link">
-                  <i class="nav-iconbi bi bi-arrow-right-square-fill"></i>
+                  <img width="30" height="30" src="https://img.icons8.com/plasticine/100/request-money.png" alt="request-money"/>
                   <p>Depositar</p>
                 </a>
               </li>
 
               <li class="nav-item">
                 <a href="{% url 'retirar' %}" class="nav-link">
-                  <i class="nav-icon bi bi-arrow-left-square-fill"></i>
+                  <img width="30" height="30" src="https://img.icons8.com/plasticine/100/cash-in-hand.png" alt="cash-in-hand"/>
                   <p>Retirar</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{% url 'transferencia' %}" class="nav-link">
-                  <i class="nav-icon bi bi-arrow-left-right"></i>
+                  <img width="30" height="30" src="https://img.icons8.com/plasticine/100/initiate-money-transfer.png" alt="initiate-money-transfer"/>
                   <p>Transferencias</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="{% url 'historial' %}" class="nav-link">
-                  <i class="nav-icon bi bi-cash-stack"></i>
+                  <img width="30" height="30" src="https://img.icons8.com/3d-fluency/94/folder-invoices--v1.png" alt="folder-invoices--v1"/>
                   <p>Historial</p>
                 </a>
               </li>
@@ -362,15 +362,20 @@
 <script>
 {% if messages %}
   {% for message in messages %}
+    let color = "#0d6efd"; // default azul
+
+    if ("{{ message.level_tag }}" === "success") color = "#28a745";
+    if ("{{ message.level_tag }}" === "error") color = "#dc3545";
+    if ("{{ message.level_tag }}" === "warning") color = "#ffc107";
+
     Swal.fire({
-      icon: "error",
-      position: 'top-center',
-      icon: '{{ message.tags }}',
-      title: '{{ message }}',
-      showConfirmButton: false,
-      timer: 3000
+      icon: "{{ message.level_tag }}",
+      title: "{{ message }}",
+      confirmButtonColor: color,
+      timer: 3000,
+      showConfirmButton: false
     });
-  {% endfor %}
+{% endfor %}
 {% endif %}
 </script>
 

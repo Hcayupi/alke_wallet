@@ -11,7 +11,7 @@
             {{ depositar_form.monto }} 
              {% if depositar_form.monto.errors %}
                           <div class="text-danger small">
-                            {{ depositar_form.monto.errors }}
+                            {{ depositar_form.monto.errors.0 }}
                           </div>
                 {% endif %}
                 

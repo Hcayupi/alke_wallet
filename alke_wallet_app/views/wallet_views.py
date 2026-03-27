@@ -4,7 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from datetime import date
 from django.http import JsonResponse
 
+from alke_wallet_app.forms.cuenta_bancaria_form import CuentaBancariaForm
 from alke_wallet_app.forms.tarjeta_form import TarjetaForm
+from alke_wallet_app.models.cuenta_bancaria import CuentaBancaria
+from alke_wallet_app.models.tarjeta import Tarjeta
 
 from ..services.historial_services import historial_transacciones_service
 from ..services.historial_services import ingresos_gastos_service
@@ -78,17 +81,40 @@ def dashboard_view(request):
 
 @login_required
 def home_view(request):
+
     
-    if "form_data" in request.session:
-        tarjeta_form = TarjetaForm(request.session["form_data"])
-        tarjeta_form._errors = request.session["form_errors"]
+    if "form_data_cbanco" in request.session:
+        CuentaBancaria_form = CuentaBancariaForm(request.session["form_data_cbanco"])
+        form_errors_cbanco = request.session.get("form_errors_cbanco")
 
-        del request.session["form_data"]
-        del request.session["form_errors"]
+        if form_errors_cbanco:
+            CuentaBancaria_form.errors.update(request.session["form_errors_cbanco"])
+
+        del request.session["form_data_cbanco"]
+        request.session.pop("form_errors_cbanco", None)
     else:
-        tarjeta_form = TarjetaForm()
+        CuentaBancaria_form = CuentaBancariaForm()
 
-    wallet = request.user.wallet
+    
+    if "form_data_tarjeta" in request.session:
+        tarjeta_form = TarjetaForm(request.session["form_data_tarjeta"])
+        form_errors_tarjeta = request.session.get("form_errors_tarjeta")
+
+        if form_errors_tarjeta:
+            tarjeta_form.errors.update(request.session["form_errors_tarjeta"])
+
+        del request.session["form_data_tarjeta"]
+        request.session.pop("form_errors_tarjeta", None)
+    else:
+        tarjeta_form = TarjetaForm(usuario=request.user)
+
+    
+    try:
+        wallet = request.user.wallet
+    except Wallet.DoesNotExist:
+        wallet = Wallet.objects.create(usuario=request.user, balance=0)
+    
+    tarjetas = Tarjeta.objects.filter(cuenta_bancaria__usuario=request.user)
 
     resumen = ingresos_gastos_service(request)
     
@@ -96,11 +122,13 @@ def home_view(request):
     total_egresos = sum(resumen["egresos"])
 
     context = {
+        "cbanco_form":CuentaBancaria_form,
         "tarjeta_form": tarjeta_form,
         "location": "Dashboard",
         "saldo": wallet.balance,
         "ingresos":total_ingresos,
         "egresos":total_egresos,
+        "tarjetas": tarjetas.count(),
         "codigo_wallet": wallet.codigo
     }
     return render(request, "home/page.html", context)

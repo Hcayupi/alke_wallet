@@ -19,7 +19,8 @@ from .views.transaccion_views import (
 )
 from .views.tarjetas_views import(
     api_tarjetas,
-    registrar_tarjeta
+    registrar_tarjeta,
+    registrar_cuenta_bancaria
 )
 
 urlpatterns = [
@@ -34,6 +35,7 @@ urlpatterns = [
     path("destinatario/",registro_destinatario, name="destinatario"),
     path("historial/", historial_view, name="historial"),
     path("registrar_tarjeta/", registrar_tarjeta, name="reg_tarjeta"),
+    path("registrar_banco/",registrar_cuenta_bancaria, name="cuenta_bancaria"),
     path("contacto/", contacto_view, name="contacto"),
     path("api/wallet/", api_codigo_wallet_destino, name="cod_wallet_api"),
     path("api/tarjetas/",api_tarjetas, name="tarjetas_api"),

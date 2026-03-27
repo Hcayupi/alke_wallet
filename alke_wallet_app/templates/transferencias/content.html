@@ -1,6 +1,6 @@
-<div class="d-flex justify-content-end">
+<div class="d-flex justify-content-start">
   <a
-    class="btn btn-success bi-person-fill-add mt-3"
+    class="btn btn-success bi-person-fill-add"
      data-bs-toggle="modal"
      data-bs-target="#destinatarioModal">
     Nuevo destinatario
@@ -8,15 +8,14 @@
 </div>
 
 <div class="d-flex justify-content-center align-items-center ">
-  <div class="card  w-40 mt-4">
+  <div class="card  w-40">
     <div class="card-body">
-
       <div class="text-center">
-        <h5>Formulario de Transferencia</h5>
+        <h4>Formulario de Transferencia</h4>
         <br/>
       </div>
       <form method="POST" >
-         {%csrf_token%}
+         {% csrf_token %}
           <div class="row mt-2">
             <div class="col-4">
               <label class="col-form-label">Destinatario </label>
@@ -37,7 +36,7 @@
             </div>
           </div>
 
-          <div class="row mt-2">
+          <div class="row">
             <div class="col-4">
               <label class="col-form-label"> {{ transferencia_form.monto.label_tag}} </label>
             </div>
@@ -47,15 +46,14 @@
             </div>
           </div>
 
-          <div class="row mb-3 mt-2">
-              <label class="col-sm-4 col-form-label"> 
+          <div class="row">
+              <label class="col-4 "> 
                     {{ transferencia_form.observacion.label_tag}} 
               </label>
 
-              <div class="col-sm-8">
+              <div class="col-8">
                     {{transferencia_form.observacion}}
               </div>
-               
           </div>
 
           <button type="submit" class="btn mt-4 btn-success w-100" >
@@ -65,13 +63,19 @@
   </div>
 </div>
 
+
   <div class="modal fade" id="destinatarioModal" tabindex="-1">
   <div class="modal-dialog w-30 modal-dialog-centered">
     <div class="modal-content">
 
-      <div class="modal-header ">
-        <h5 class="modal-title text-center">Formulario de registro de destinatario</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-header justify-content-center position-relative">
+        <h5 class="modal-title">Formulario de registro de destinatario</h5>
+        <input type="hidden" name="form_type" value="cuenta">
+          <button
+          type="button"
+          class="btn-close position-absolute end-0 me-3"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <form method="POST" action={% url 'destinatario'%}   novalidate>
         {% csrf_token %}
@@ -85,7 +89,7 @@
               {{ destinatario_form.wallet_codigo }}
               {% if destinatario_form.wallet_codigo.errors %}
                 <div class="text-danger small">
-                  {{ destinatario_form.wallet_codigo.errors }}
+                  {{ destinatario_form.wallet_codigo.errors.0 }}
                 </div>
               {% endif %}
             </div>
@@ -99,7 +103,7 @@
               {{ destinatario_form.nombre }}
               {% if destinatario_form.nombre.errors %}
                 <div class="text-danger small">
-                  {{ destinatario_form.nombre.errors }}
+                  {{ destinatario_form.nombre.errors.0 }}
                 </div>
               {% endif %}
             </div>
@@ -113,7 +117,7 @@
               {{ destinatario_form.apellido }}
               {% if destinatario_form.apellido.errors %}
                 <div class="text-danger small">
-                  {{ destinatario_form.apellido.errors }}
+                  {{ destinatario_form.apellido.errors.0 }}
                 </div>
               {% endif %}
             </div>
@@ -127,7 +131,7 @@
               {{ destinatario_form.email }}
               {% if destinatario_form.email.errors %}
                 <div class="text-danger small">
-                  {{ destinatario_form.email.errors }}
+                  {{ destinatario_form.email.errors.0 }}
                 </div>
               {% endif %}
             </div>
@@ -141,7 +145,7 @@
               {{ destinatario_form.apodo }}
               {% if destinatario_form.apodo.errors %}
                 <div class="text-danger small">
-                  {{ destinatario_form.apodo.errors }}
+                  {{ destinatario_form.apodo.errors.0 }}
                 </div>
               {% endif %}
             </div>
@@ -158,5 +162,39 @@
 
       </form>
     </div>
+  </div>
+</div>
+
+ <!-- INICIO --  HISTORIAL DE TRANSFERENCIAS -->
+
+<div class="card  shadow-sm mt-2">
+    <div class="card-header bg-success-subtle text-center" style="height: 46px !important;"><h4>Historial de transferencias</h4></div>
+  <div class="card-body">
+    
+    <table  class="table table-striped" id="tabla-transferencias">
+      <thead>
+        <tr>
+          <th scope="col">Codigo transacción</th>
+          <th scope="col">Fecha</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Destinatario</th>
+          <th scope="col">Wallet destinatario</th>
+          <th scope="col">Monto</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for transferencia in hitorial_transferencias%}
+        <tr>
+          <td scope="row">{{transferencia.codigo}}</td>
+          <td data-order="{{ transferencia.fecha|date:'Y-m-d H:i:s' }}"> {{transferencia.fecha|date:"d M y - H:i" }}</td>
+          <td>{{transferencia.descripcion}}</td>
+          <td>{{transferencia.destinatario}}</td>
+           <td>{{transferencia.wallet_destino}}</td>
+          <td class="text-danger">{{transferencia.monto}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
