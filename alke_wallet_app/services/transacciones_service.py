@@ -1,5 +1,8 @@
 import uuid
 from django.db import transaction
+from alke_wallet_app.enum.origen_fondo_enum import OrigenFondo
+from alke_wallet_app.enum.tipo_direccion_enum import TipoDireccion
+from alke_wallet_app.enum.tipo_transaccion_enum import TipoTransaccion
 from alke_wallet_app.models.destinatarios import Destinatario
 from alke_wallet_app.models.transaccion import Transaccion
 from alke_wallet_app.models.wallet import Wallet
@@ -28,8 +31,9 @@ def transferir(origen_id, destino_id, monto):
             wallet = origen,
             wallet_tercero = destino,
             nombre_destinatario= destinatario.apodo,
-            tipo_transaccion = "transferencia",
-            tipo_direccion = "debito",
+            tipo_transaccion = TipoTransaccion.TRANSFERENCIA,
+            tipo_direccion = TipoDireccion.DEBITO,
+            origen_fondo = OrigenFondo.PROPIO,
             monto = monto,
             referencia = ref
         )
@@ -37,8 +41,9 @@ def transferir(origen_id, destino_id, monto):
         Transaccion.objects.create(
             wallet = destino,
             wallet_tercero = origen,
-            tipo_transaccion = "transferencia",
-            tipo_direccion = "crédito",
+            tipo_transaccion = TipoTransaccion.TRANSFERENCIA,
+            tipo_direccion = TipoDireccion.CREDITO,
+            origen_fondo = OrigenFondo.TERCERO,
             monto = monto,
             referencia = ref
         )

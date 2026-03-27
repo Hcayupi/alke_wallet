@@ -83,9 +83,16 @@ def retirar_view(request):
                     tipo_transaccion=TipoTransaccion.RETIRO,
                     tipo_direccion=TipoDireccion.DEBITO,
                     monto=form.cleaned_data["monto"],
-                    descripcion=form.cleaned_data.get("descripcion", "")
+                    descripcion=form.cleaned_data.get("observacion", "")
             )
             messages.success(request, "Retiro ejecutado con éxito")
+        
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request,error)
+
+
     else:
         form = RetiroForm()
     balance = request.user.wallet.balance
@@ -136,6 +143,7 @@ def transferencias_view(request):
 
 
     context = {
+            "saldo_actual": int(request.user.wallet.balance),
             "hitorial_transferencias":hitorial_transferencias,
             "transferencia_form":transferencia_form, 
             "destinatario_form":destinatario_form, 

@@ -1,13 +1,33 @@
-<div class="d-flex justify-content-start">
-  <a
-    class="btn btn-success bi-person-fill-add"
-     data-bs-toggle="modal"
-     data-bs-target="#destinatarioModal">
-    Nuevo destinatario
-  </a>
+{% load custom_filters %}
+
+<div class="d-grid gap-2 d-md-block">
+    <a
+      class="btn btn-success bi-person-fill-add"
+      data-bs-toggle="modal"
+      data-bs-target="#destinatarioModal">
+      Crear destinatario
+    </a>
+    <a
+      class="btn btn-warning bi-person-fill-add"
+      data-bs-toggle="modal"
+      data-bs-target="#destinatarioModal">
+      Editar destinatario
+    </a>
+  
 </div>
 
-<div class="d-flex justify-content-center align-items-center ">
+<div class="row mt-4">
+  <div class="col-3">
+    <div class="card   align-items-center text-bg-light  mb-3" style="max-width: 18rem;">
+          <div class="card-header"><h4 class="fs-1">{{saldo_actual|clp}}</h4></div>
+          <div class="card-body ">
+            <h5 class="card-title">SALDO ACTUAL</h5>
+          </div>
+    </div>
+  </div>
+
+  <div class="col-9">
+    <div class="d-flex justify-content-left align-items-center ">
   <div class="card  w-40">
     <div class="card-body">
       <div class="text-center">
@@ -62,8 +82,12 @@
   </form>
   </div>
 </div>
+  </div>
+</div>
 
 
+
+<!--  MODAL DE REGISTRO DE DESTINATARIO-->
   <div class="modal fade" id="destinatarioModal" tabindex="-1">
   <div class="modal-dialog w-30 modal-dialog-centered">
     <div class="modal-content">
@@ -176,7 +200,6 @@
         <tr>
           <th scope="col">Codigo transacción</th>
           <th scope="col">Fecha</th>
-          <th scope="col">Descripción</th>
           <th scope="col">Destinatario</th>
           <th scope="col">Wallet destinatario</th>
           <th scope="col">Monto</th>
@@ -188,7 +211,6 @@
         <tr>
           <td scope="row">{{transferencia.codigo}}</td>
           <td data-order="{{ transferencia.fecha|date:'Y-m-d H:i:s' }}"> {{transferencia.fecha|date:"d M y - H:i" }}</td>
-          <td>{{transferencia.descripcion}}</td>
           <td>{{transferencia.destinatario}}</td>
            <td>{{transferencia.wallet_destino}}</td>
           <td class="text-danger">{{transferencia.monto}}</td>

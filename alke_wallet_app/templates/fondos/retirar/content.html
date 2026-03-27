@@ -25,6 +25,9 @@
               <div class="col-sm-8">
                   {{retirar_form.monto }}
               </div>
+              {% for error in retirar_form.non_field_errors %}
+                  <div class="alert alert-danger">{{ error }}</div>
+              {% endfor %}
                
           </div>
 
