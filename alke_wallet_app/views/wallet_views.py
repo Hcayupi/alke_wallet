@@ -137,7 +137,7 @@ def home_view(request):
 def historial_view(request):
     movimientos = historial_transacciones_service(request)
 
-    context = {"location": "Movimientos", "movimientos":movimientos}
+    context = {"location": "Historial", "movimientos":movimientos}
     return render(request, "historial/page.html", context)
 
 
